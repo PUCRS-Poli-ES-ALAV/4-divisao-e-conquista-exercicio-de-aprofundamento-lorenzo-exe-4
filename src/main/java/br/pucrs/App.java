@@ -1,6 +1,7 @@
 package br.pucrs;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class App 
 {
@@ -9,24 +10,56 @@ public class App
 
     public static void main( String[] args )
     { 
-        mergeSortTest1();
+        float t1 = mergeSortTest1(generateIntArray(10, 10));
+        float t2 = mergeSortTest1(generateIntArray(100, 100));
+        float t3 = mergeSortTest1(generateIntArray(1000, 1000));
+        
+        float t4 = maxVal1Test1(generateLongArray(1000, 10000));
+        float t5 = maxVal1Test1(generateLongArray(100000, 100000));
+        float t6 = maxVal1Test1(generateLongArray(10000000, 1000000));
 
-        maxVal1Test1();
+        float t7 = maxVal2Test1(generateLongArray(1000, 10000));
+        float t8 = maxVal2Test1(generateLongArray(100000, 100000));
+        float t9 = maxVal2Test1(generateLongArray(10000000, 1000000));
 
-        maxVal2Test1();
+        float t10 = multiplyTest1(10, 8, 4);
+        float t11 = multiplyTest1(28120, 31243, 16);
+        float t12 = multiplyTest1(1909551616, 1709551616, 64);
+        
+        System.out.println("\t\t\ttam1\t\ttam2\t\ttam3");
+        System.out.printf("mergeSort\t%f\t%f\t%f\n", t1, t2, t3);
+        System.out.printf("maxVal1\t\t%f\t%f\t%f\n", t4, t5, t6);
+        System.out.printf("maxVal2\t\t%f\t%f\t%f\n", t7, t8, t9);
+        System.out.printf("multiply\t%f\t%f\t%f\n\n", t10, t11, t12);
+    }
+    
+    static Integer[] generateIntArray(int n, int maxN) {
+        Integer[] list = new Integer[n];
+        Random random = new Random();
+        
+        for (int i = 0; i < n; i++)
+        {
+            list[i] = random.nextInt(1000);
+        }
+        
+       return list;
+    }
+    
+    static long[] generateLongArray(int n, long maxN) {
+        long[] list = new long[n];
+        Random random = new Random();
+        
+        for (int i = 0; i < n; i++)
+        {
+            list[i] = random.nextLong(maxN);
+        }
+        
+       return list;
     }
 
-    static void mergeSortTest1() {
-        Integer[] v = new Integer[] { 54, 26, 93, 17, 77, 31, 44, 55, 20 };
-
-        System.out.print("\nArray before mergeSort: ");
-
-        for (Integer el : v) {
-            System.out.print(el);
-            System.out.print(" ");
-        }
-
-        System.out.print("\nArray after mergeSort: ");
+    static float mergeSortTest1(Integer[] v) {
+        System.out.print("\nArray size: ");
+        System.out.print(v.length);
 
         counter = 0;
 
@@ -36,11 +69,6 @@ public class App
         
         long stopTime = System.nanoTime(); 
 
-        for (Integer el : v) {
-            System.out.print(el);
-            System.out.print(" ");
-        }
-
         System.out.print("\nTotal repetitions: ");
         System.out.print(counter);      
 
@@ -49,25 +77,21 @@ public class App
         System.out.print(time);
         System.out.println(" ms\n");
 
-        counter = 0; 
+        counter = 0;
+        
+        return time;
     }
 
-    static void maxVal1Test1() {
-        long[] v = new long[] { 54, 26, 93, 17, 77, 31, 44, 55, 20 };
-
-        System.out.print("\nArray: ");
-
-        for (long el : v) {
-            System.out.print(el);
-            System.out.print(" ");
-        }
-
-        System.out.print("\nHighest value in array: ");
+    static float maxVal1Test1(long[] v) {
+        System.out.print("\nArray size: ");
+        System.out.print(v.length);
 
         counter = 0;
 
-        long startTime = System.nanoTime();
+        System.out.print("\nMax value is: ");
 
+        long startTime = System.nanoTime();
+        
         System.out.print(maxVal1(v, v.length));
         
         long stopTime = System.nanoTime(); 
@@ -81,24 +105,20 @@ public class App
         System.out.println(" ms\n");
 
         counter = 0; 
+        
+        return time; 
     }
 
-    static void maxVal2Test1() {
-        long[] v = new long[] { 54, 26, 93, 17, 77, 31, 44, 55, 20 };
-
-        System.out.print("\nArray: ");
-
-        for (long el : v) {
-            System.out.print(el);
-            System.out.print(" ");
-        }
-
-        System.out.print("\nHighest value in array: ");
+    static float maxVal2Test1(long[] v) {
+        System.out.print("\nArray size: ");
+        System.out.print(v.length);
 
         counter = 0;
 
+        System.out.print("\nMax value is: ");
+        
         long startTime = System.nanoTime();
-
+        
         System.out.print(maxVal2(v, 0, v.length - 1));
         
         long stopTime = System.nanoTime(); 
@@ -112,6 +132,32 @@ public class App
         System.out.println(" ms\n");
 
         counter = 0; 
+        
+        return time; 
+    }
+    
+    static float multiplyTest1(long x, long y, long n) {
+        counter = 0;
+
+        System.out.printf("\nResult of %d * %d, with %d bits: ", x, y, n);
+
+        long startTime = System.nanoTime();
+        
+        System.out.print(multiply(x, y, n));
+        
+        long stopTime = System.nanoTime(); 
+
+        System.out.print("\nTotal repetitions: ");
+        System.out.print(counter);      
+
+        System.out.print("\nTotal time: ");
+        float time = (float)(stopTime - startTime) / convFactor;
+        System.out.print(time);
+        System.out.println(" ms\n");
+
+        counter = 0; 
+        
+        return time;
     }
 
     static Integer[] mergeSort(Integer[] list) {
@@ -183,5 +229,27 @@ public class App
         int m = (init + end)/2;
 
         return Math.max(maxVal2(A, init, m), maxVal2(A, m + 1, end));
+    }
+    
+    static long multiply(long x, long y, long n) {
+        counter++;
+        
+        if (n == 1)
+            return x * y;
+        
+        long m = n / 2;
+        long k = (long) Math.pow(2, m);
+        
+        long a = x / k;
+        long b = x % k;
+        long c = y / k;
+        long d = y % k;
+        
+        long e = multiply(a, c, m);
+        long f = multiply(b, d, m);
+        long g = multiply(b, c, m);
+        long h = multiply(a, d, m);
+        
+        return ((long) Math.pow(2, 2 * m) * e) + (k * (g + h) + f);
     }
 }
